@@ -1,0 +1,38 @@
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.3&appId=195536664693976&autoLogAppEvents=1"></script>
+
+<div class="fb-login-button" data-scope="user_friends" data-width="" data-size="large" data-button-type="continue_with" data-auto-logout-link="false" data-use-continue-as="false"></div>
+<div id="response"></div>
+
+<script>
+
+window.fbAsyncInit = function() {
+    FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+            $(".fb-login-button").hide();
+            DoWork(response.authResponse.accessToken);
+        } else {
+            $(".fb-login-button").show();
+            console.log("not connected");
+        }
+    });
+};
+
+function DoWork(at){
+    FB.api('me/friends', function (res) {
+      if(!res || res.error) {
+         console.log(!res ? 'error occurred' : res.error);
+         console.log(res);
+        $("#response").html("ERROR"+ JSON.stringify(res));
+         return;
+      }
+
+      $("#response").html(JSON.stringify(res));
+    });
+}
+</script>
+
+
