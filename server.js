@@ -3,7 +3,7 @@ const qs = require('querystring');
 var FB = require('fb');
 var app = express();
 
-var server = app.listen(80);
+var server = app.listen(8080);
 
 function showFriends(request, response) {
 
